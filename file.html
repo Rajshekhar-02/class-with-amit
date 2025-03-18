@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class With Amit - School Portal</title>
+    <style>
+        /* CSS Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #0056b3;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 40px;
+        }
+
+        section {
+            margin: 20px 0;
+        }
+
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 10px;  /* Reduced padding to half */
+            font-size: 12px; /* Smaller font size */
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #218838;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+        }
+
+        button {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: darkred;
+        }
+
+        /* Hide dashboards initially */
+        #student-dashboard, #admin-dashboard {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <h1>Class With Amit - School Portal</h1>
+        <ul>
+            <li><a href="#" onclick="showSection('home')">Home</a></li>
+            <li><a href="#" onclick="showSection('login')">Login</a></li>
+            <li><a href="#" onclick="showSection('about')">About</a></li>
+            <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <!-- Home Section -->
+    <section id="home">
+        <h2>Welcome to Class With Amit</h2>
+        <p>Your gateway to academic success. Login to access results, attendance, and more!</p>
+        <a href="#" class="btn" onclick="showSection('login')">Login Now</a>
+    </section>
+
+    <!-- Login Section -->
+    <section id="login" style="display:none;">
+        <h2>Login</h2>
+        <form id="login-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" placeholder="Enter Username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Enter Password" required>
+
+            <div class="btn-group">
+                <button type="submit" class="btn">Student Login</button>
+                <button type="button" class="btn" onclick="loginAdmin()">Admin Login</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Student Dashboard -->
+    <section id="student-dashboard" style="display:none;">
+        <h2>Student Dashboard</h2>
+
+        <div class="card">
+            <h3>Report Card</h3>
+            <p>Math: 89%</p>
+            <p>Science: 92%</p>
+            <p>English: 85%</p>
+        </div>
+
+        <div class="card">
+            <h3>Attendance</h3>
+            <p>Present: 95%</p>
+            <p>Absent: 5%</p>
+        </div>
+
+        <a href="#" class="btn" onclick="logout()">Logout</a>
+    </section>
+
+    <!-- Admin Dashboard -->
+    <section id="admin-dashboard" style="display:none;">
+        <h2>Admin Dashboard</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Roll No</th>
+                    <th>Class</th>
+                    <th>Marks</th>
+                    <th>Attendance</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Alice</td>
+                    <td>101</td>
+                    <td>Class 10</td>
+                    <td>92%</td>
+                    <td>95%</td>
+                    <td><button onclick="deleteRecord(this)">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>Bob</td>
+                    <td>102</td>
+                    <td>Class 12</td>
+                    <td>89%</td>
+                    <td>90%</td>
+                    <td><button onclick="deleteRecord(this)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="#" class="btn" onclick="logout()">Logout</a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" style="display:none;">
+        <h2>About Us</h2>
+        <p>Class With Amit is dedicated to providing quality education with transparency in results and attendance.</p>
+    </section>
+
+</main>
+
+<footer>
+    <p>&copy; 2025 Class With Amit. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // JavaScript Functionality
+
+    function showSection(sectionId) {
+        document.querySelectorAll('section').forEach(sec => {
+            sec.style.display = 'none';
+        });
+        document.getElementById(sectionId).style.display = 'block';
+    }
+
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        showSection('student-dashboard');
+    });
+
+    function loginAdmin() {
+        showSection('admin-dashboard');
+    }
+
+    function logout() {
+        showSection('home');
+    }
+
+    function deleteRecord(button) {
+        const row = button.closest('tr');
+        row.remove();
+        alert('Record Deleted');
+    }
+</script>
+
+</body>
+</html>
